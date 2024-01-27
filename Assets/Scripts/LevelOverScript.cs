@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class LevelOverScript : MonoBehaviour
 {
     private int currentLevel;
-    string currentSceneName = SceneManager.GetActiveScene().name;
+    private int lastLevel;
+    string currentSceneName;
 
     private void Awake()
     {
         currentLevel = PlayerPrefs.GetInt("LevelNumber");
+        currentSceneName = SceneManager.GetActiveScene().name;
     }
 
     // Start is called before the first frame update
@@ -23,6 +25,17 @@ public class LevelOverScript : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Win()
+    {
+        lastLevel++;
+        PlayerPrefs.SetInt("LevelProgress", currentLevel);
+    }
+
+    public void Lose()
+    {
+
     }
 
     public void Next()
