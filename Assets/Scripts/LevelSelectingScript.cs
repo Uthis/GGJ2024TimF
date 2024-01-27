@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class LevelSelectingScript : MonoBehaviour
 {
-    private int level;
+    /*private int level;
     private int levelProgress = 1;
     [SerializeField] private Text[] levelText;
     [SerializeField] private GameObject[] locks;
@@ -126,5 +126,5 @@ public class LevelSelectingScript : MonoBehaviour
             PlayerPrefs.SetInt("LevelNumber", level);
             SceneManager.LoadScene("Game");
         }
-    }
+    }*/
 }
