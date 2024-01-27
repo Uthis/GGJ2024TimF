@@ -12,11 +12,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Text[] levelText;
     [SerializeField] private GameObject[] locks;
     [SerializeField] private GameObject[] text;
-    private int level;
-    private int levelProgress = 1;
 
     private void Awake()
     {
+        PlayerPrefs.SetInt("LevelProgress", levelProgress);
         levelProgress = PlayerPrefs.GetInt("LevelProgress");
 
         for (int i = 0; i < 5; i++)
