@@ -13,7 +13,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] GameObject panelGameOver;
     [SerializeField] Sprite heartActive,heartInactive;
     [SerializeField] List<Image> hearts;
-
+    [SerializeField] AudioSource winSound, loseSound;
     int level,showedClues,health;
     Level currLevel;
 
@@ -54,12 +54,17 @@ public class GameplayManager : MonoBehaviour
             inputAnswer.SetActive(false);
             txtClue.gameObject.SetActive(false);
             txtAnswer.text = "Aku adalah " + currLevel.answer;
+            winSound.Play();
         }
         else
         {
             health--;
             RefreshHeart();
-            if(health <= 0) panelGameOver.SetActive(true);
+            if (health <= 0)
+            {
+                panelGameOver.SetActive(true);
+                loseSound.Play();
+            }
         }
     }
 
