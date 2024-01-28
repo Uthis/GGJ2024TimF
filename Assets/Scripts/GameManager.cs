@@ -71,6 +71,12 @@ public class GameManager : MonoBehaviour
         bgm.mute = !bgm.mute;
     }
 
+    public bool isSound()
+    {
+        AudioSource bgm = GetComponent<AudioSource>();
+        return !bgm.mute;
+    }
+
     public void Confirmation(string text,Action action)
     {
         onYes = action;
