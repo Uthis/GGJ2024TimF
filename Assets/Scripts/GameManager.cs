@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject panelConfirmation;
     [SerializeField] Text txtConfirmation;
+    [SerializeField] ParticleSystem tapParticle;
+    [SerializeField] GameObject objectParticle;
     Action onYes;
 
     private void Awake()
@@ -20,9 +22,15 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(objectParticle);
         }
         else
             Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        ParticleTapSystem();
     }
 
     public void PlayGame()
@@ -74,5 +82,16 @@ public class GameManager : MonoBehaviour
     {
         onYes = null;
         panelConfirmation.SetActive(false);
+    }
+
+    public void ParticleTapSystem()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePosition = Input.mousePosition;
+            objectParticle.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
+            tapParticle.Play();
+        }
+        
     }
 }
