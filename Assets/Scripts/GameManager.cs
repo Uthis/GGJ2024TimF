@@ -31,6 +31,12 @@ public class GameManager : MonoBehaviour
         GetComponentInChildren<Canvas>().worldCamera = Camera.main;
     }
 
+    public void PlayBonus()
+    {
+        SceneManager.LoadScene("Game2");
+        GetComponentInChildren<Canvas>().worldCamera = Camera.main;
+    }
+
     public void BackToMenu()
     {
         Confirmation("Ingin kembali ke halaman awal?", DoBackToMenu);
