@@ -14,7 +14,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] Sprite heartActive,heartInactive;
     [SerializeField] List<Image> hearts;
     [SerializeField] Animator animSalah;
-    [SerializeField] AudioClip clipBenar,clipSalah;
+    [SerializeField] AudioClip clipBenar,clipSalah,clipGameOver;
     [SerializeField] AudioSource source;
 
     int level,showedClues,health;
@@ -57,6 +57,7 @@ public class GameplayManager : MonoBehaviour
             inputAnswer.SetActive(false);
             txtClue.gameObject.SetActive(false);
             txtAnswer.text = "Aku adalah " + currLevel.answer;
+            txtAnswer.gameObject.SetActive(true);
             source.PlayOneShot(clipBenar);
             if (level >= 5) btnNext.GetComponentInChildren<Text>().text = "Bonus";
         }
@@ -67,7 +68,11 @@ public class GameplayManager : MonoBehaviour
             source.PlayOneShot(clipSalah);
             animSalah.Play("FadeIn");
             txtInputAnswer.text = "";
-            if (health <= 0) panelGameOver.SetActive(true);
+            if (health <= 0)
+            {
+                source.PlayOneShot(clipGameOver);
+                panelGameOver.SetActive(true);
+            }
         }
     }
 
