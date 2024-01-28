@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,49 +8,71 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private int currentLevel;
-    string currentSceneName;
+    public static GameManager instance;
 
-    private AudioSource bgm;
-    [SerializeField] private Image soundImg;
-    [SerializeField] private Sprite soundOn;
-    [SerializeField] private Sprite soundOff;
-    private bool enable = true;
+    [SerializeField] GameObject panelConfirmation;
+    [SerializeField] Text txtConfirmation;
+    Action onYes;
 
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
-        bgm = GetComponent<AudioSource>();
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void PlayGame()
     {
-        
+        SceneManager.LoadScene("Game");
+        GetComponentInChildren<Canvas>().worldCamera = Camera.main;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void BackToMenu()
     {
+        Confirmation("Ingin kembali ke halaman awal?", DoBackToMenu);
+    }
 
+    public void DoBackToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void Quit()
     {
+        Confirmation("Ingin Keluar Game?",DoQuit);
+    }
+
+    public void DoQuit()
+    {
         Application.Quit();
     }
 
-    public void SoundSwitch()
+    public void ToggleSound()
     {
-        enable = !enable;
-        bgm.mute = enable;
-        if (enable)
-        {
-            soundImg.sprite = soundOn;
-        }
-        else
-        {
-            soundImg.sprite = soundOff;
-        }
+        AudioSource bgm = GetComponent<AudioSource>();
+        bgm.mute = !bgm.mute;
+    }
+
+    public void Confirmation(string text,Action action)
+    {
+        onYes = action;
+        txtConfirmation.text = text;
+        panelConfirmation.SetActive(true);
+    }
+
+    public void OnYes()
+    {
+        onYes.Invoke();
+        OnNo();
+    }
+
+    public void OnNo()
+    {
+        onYes = null;
+        panelConfirmation.SetActive(false);
     }
 }
